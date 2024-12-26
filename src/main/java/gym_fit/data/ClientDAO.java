@@ -18,6 +18,28 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public boolean modifiedClient(Client client) {
+        PreparedStatement preparedStatement;
+        Connection connection = getConnection();
+        var sql = "UPDATE client SET name=?, lastName=?, membership=? " +
+                "WHERE id =?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setString(2, client.getLastName());
+            preparedStatement.setInt(3, client.getMembership());
+            preparedStatement.setInt(4, client.getId());
+            preparedStatement.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error modifying client " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connection " + e.getMessage());
+            }
+        }
+
         return false;
     }
 
