@@ -28,6 +28,29 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public boolean searchClientById(Client client) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        var connection = getConnection();
+        var sql = "SELECT * FROM client WHERE id = ? ";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, client.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                client.setName(resultSet.getString("name"));
+                client.setLastName(resultSet.getString("lastName"));
+                client.setMembership(resultSet.getInt("membership"));
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving customer by id " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connection " + e.getMessage());
+            }
+        }
         return false;
     }
 
