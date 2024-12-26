@@ -1,5 +1,8 @@
 package gym_fit.domain;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class Client {
     private int id;
     private String name;
@@ -54,5 +57,28 @@ public class Client {
 
     public void setMembership(int membership) {
         this.membership = membership;
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Client.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("lastName='" + lastName + "'")
+                .add("membership=" + membership)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && membership == client.membership && Objects.equals(name, client.name) && Objects.equals(lastName, client.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, membership);
     }
 }
