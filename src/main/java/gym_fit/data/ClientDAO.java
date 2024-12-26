@@ -23,6 +23,28 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public boolean addClient(Client client) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        var connection = getConnection();
+        var sql = "INSERT INTO client(name, lastName, membership) "
+                + " VALUES(?, ?, ?) ";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setString(2, client.getLastName());
+            preparedStatement.setInt(3, client.getMembership());
+            preparedStatement.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error adding client " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connection " + e.getMessage());
+            }
+        }
+
         return false;
     }
 
@@ -75,12 +97,12 @@ public class ClientDAO implements IClientDAO {
                 clientList.add(client);
             }
         } catch (Exception e) {
-            System.out.println("error to list clients " + e.getMessage());
+            System.out.println("Error to list clients " + e.getMessage());
         } finally {
             try {
                 connectionDb.close();
             } catch (Exception e) {
-                System.out.println("error closing connection " + e.getMessage());
+                System.out.println("Error closing connection " + e.getMessage());
             }
         }
         return clientList;
