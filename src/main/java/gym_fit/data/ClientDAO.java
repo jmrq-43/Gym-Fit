@@ -13,6 +13,23 @@ import static gym_fit.connection.ConnectionDb.getConnection;
 public class ClientDAO implements IClientDAO {
     @Override
     public boolean deleteClient(Client client) {
+        PreparedStatement preparedStatement;
+        Connection connection  = getConnection();
+        var sql = "DELETE FROM client WHERE id=?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,client.getId());
+            preparedStatement.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error to deleting client " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connection " + e.getMessage());
+            }
+        }
         return false;
     }
 
