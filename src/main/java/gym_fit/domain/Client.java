@@ -25,6 +25,7 @@ public class Client {
     public Client(int id, String name, String lastName, int membership) {
         this(name, lastName, membership);
         this.membership = membership;
+        this.id = id;
     }
 
     public int getId() {
