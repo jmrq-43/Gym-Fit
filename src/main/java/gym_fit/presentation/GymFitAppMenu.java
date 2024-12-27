@@ -26,11 +26,32 @@ public class GymFitAppMenu {
 
     private static boolean executeOptions(Scanner console, IClientDAO clientDAO, int option) {
         var leave = false;
-        switch (option){
+        switch (option) {
             case 1 -> listClients(clientDAO);
             case 2 -> searchClient(clientDAO);
+            case 3 -> addClient(clientDAO);
         }
         return false;
+    }
+
+    private static void addClient(IClientDAO clientDAO) {
+        System.out.println("--- add new client ---");
+        System.out.print("Enter name: ");
+        var name = String.valueOf(console.nextLine());
+
+        System.out.print("Enter last name: ");
+        var lastName = String.valueOf(console.nextLine());
+
+        System.out.print("Enter membership number: ");
+        var membership = Integer.parseInt(console.nextLine());
+
+        var client = new Client(name, lastName, membership);
+        var search = clientDAO.addClient(client);
+
+        if (search) {
+            System.out.println("Client added successfully");
+        } else
+            System.out.println("Error added client");
     }
 
     private static void searchClient(IClientDAO clientDAO) {
