@@ -30,8 +30,27 @@ public class GymFitAppMenu {
             case 1 -> listClients(clientDAO);
             case 2 -> searchClient(clientDAO);
             case 3 -> addClient(clientDAO);
+            case 4 -> deleteClient(clientDAO);
         }
         return false;
+    }
+
+    private static void deleteClient(IClientDAO clientDAO) {
+        System.out.println("--- delete client ---");
+        listClients(clientDAO);
+
+        System.out.print("Select a client id: ");
+        var idClientDelete = Integer.parseInt(console.nextLine());
+
+        var client = new Client(idClientDelete);
+        var deleting = clientDAO.deleteClient(client);
+
+        System.out.println("deleting.....");
+
+        if (deleting) {
+            System.out.println("client deleted successfully");
+        } else
+            System.out.println("Error to delete client");
     }
 
     private static void addClient(IClientDAO clientDAO) {
