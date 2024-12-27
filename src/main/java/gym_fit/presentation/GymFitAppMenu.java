@@ -27,6 +27,14 @@ public class GymFitAppMenu {
     }
 
     private static void printMenu() {
-
+        System.out.print("""
+                **** Welcome to GymFit ****
+                1. List clients
+                2. Search client by id
+                3. Add new client
+                4. Delete client
+                5. Modified client
+                6. Exit
+                Choose an option:\s""");
     }
 }
