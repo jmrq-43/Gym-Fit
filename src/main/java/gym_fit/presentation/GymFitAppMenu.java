@@ -31,8 +31,32 @@ public class GymFitAppMenu {
             case 2 -> searchClient(clientDAO);
             case 3 -> addClient(clientDAO);
             case 4 -> deleteClient(clientDAO);
+            case 5 -> modifyClient(clientDAO);
         }
         return false;
+    }
+
+    private static void modifyClient(IClientDAO clientDAO) {
+        listClients(clientDAO);
+        System.out.print("Select a client id to modify: ");
+        var idClientModify = Integer.parseInt(console.nextLine());
+
+        System.out.print("Enter new name: ");
+        var name = String.valueOf(console.nextLine());
+
+        System.out.print("Enter new last name: ");
+        var lastName = String.valueOf(console.nextLine());
+
+        System.out.print("Enter new membership number: ");
+        var membership = Integer.parseInt(console.nextLine());
+
+        var client = new Client(idClientModify, name, lastName, membership);
+        var modifiedClint = clientDAO.modifiedClient(client);
+
+        if (modifiedClint) {
+            System.out.println("Client modify successfully");
+        } else
+            System.out.println("Error, client doesn't was modify");
     }
 
     private static void deleteClient(IClientDAO clientDAO) {
