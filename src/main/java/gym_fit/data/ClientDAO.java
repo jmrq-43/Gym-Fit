@@ -14,11 +14,11 @@ public class ClientDAO implements IClientDAO {
     @Override
     public boolean deleteClient(Client client) {
         PreparedStatement preparedStatement;
-        Connection connection  = getConnection();
+        Connection connection = getConnection();
         var sql = "DELETE FROM client WHERE id=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,client.getId());
+            preparedStatement.setInt(1, client.getId());
             preparedStatement.execute();
             return true;
         } catch (Exception e) {
