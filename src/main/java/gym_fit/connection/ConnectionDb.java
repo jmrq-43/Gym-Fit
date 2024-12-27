@@ -21,11 +21,4 @@ public class ConnectionDb {
         return connection;
     }
 
-    public static void main(String[] args) {
-        var connection = ConnectionDb.getConnection();
-        if (connection != null) {
-            System.out.println("connection successful " + connection);
-        } else
-            System.out.println("error to connection");
-    }
 }
