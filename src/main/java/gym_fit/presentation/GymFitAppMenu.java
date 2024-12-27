@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class GymFitAppMenu {
     static Scanner console = new Scanner(System.in);
+    static boolean leave = false;
 
     public static void menu() {
-        var leave = false;
         IClientDAO clientDAO = new ClientDAO();
         while (!leave) {
             try {
@@ -25,15 +25,19 @@ public class GymFitAppMenu {
     }
 
     private static boolean executeOptions(Scanner console, IClientDAO clientDAO, int option) {
-        var leave = false;
         switch (option) {
             case 1 -> listClients(clientDAO);
             case 2 -> searchClient(clientDAO);
             case 3 -> addClient(clientDAO);
             case 4 -> deleteClient(clientDAO);
             case 5 -> modifyClient(clientDAO);
+            case 6 -> {
+                System.out.println("leaving....");
+                leave = true;
+            }
+            default -> System.out.println("not valid option");
         }
-        return false;
+        return leave;
     }
 
     private static void modifyClient(IClientDAO clientDAO) {
