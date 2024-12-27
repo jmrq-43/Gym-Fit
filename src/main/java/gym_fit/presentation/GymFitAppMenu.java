@@ -11,8 +11,8 @@ public class GymFitAppMenu {
         var clientDAO = new ClientDAO();
         while (!leave) {
             try {
-                printMenu();
-                leave = executeOptions(console, clientDAO);
+                var option = printMenu(console);
+                leave = executeOptions(console, clientDAO, option);
 
             } catch (Exception e) {
                 System.out.println("Error to execute menu: " + e.getMessage());
@@ -21,12 +21,12 @@ public class GymFitAppMenu {
         }
     }
 
-    private static boolean executeOptions(Scanner console, ClientDAO clientDAO) {
+    private static boolean executeOptions(Scanner console, ClientDAO clientDAO, int option) {
 
         return false;
     }
 
-    private static void printMenu() {
+    private static int printMenu(Scanner console) {
         System.out.print("""
                 **** Welcome to GymFit ****
                 1. List clients
@@ -36,5 +36,6 @@ public class GymFitAppMenu {
                 5. Modified client
                 6. Exit
                 Choose an option:\s""");
+        return Integer.parseInt(console.nextLine());
     }
 }
