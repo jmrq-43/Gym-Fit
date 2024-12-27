@@ -2,13 +2,15 @@ package gym_fit.presentation;
 
 import gym_fit.data.ClientDAO;
 import gym_fit.data.IClientDAO;
+import gym_fit.domain.Client;
 
 import java.util.Scanner;
 
 public class GymFitAppMenu {
+    static Scanner console = new Scanner(System.in);
+
     public static void menu() {
         var leave = false;
-        var console = new Scanner(System.in);
         IClientDAO clientDAO = new ClientDAO();
         while (!leave) {
             try {
@@ -26,11 +28,24 @@ public class GymFitAppMenu {
         var leave = false;
         switch (option){
             case 1 -> listClients(clientDAO);
+            case 2 -> searchClient(clientDAO);
         }
         return false;
     }
 
+    private static void searchClient(IClientDAO clientDAO) {
+        System.out.print("Enter the client id: ");
+        var idClient = Integer.parseInt(console.nextLine());
+        var client = new Client(idClient);
+        var found = clientDAO.searchClientById(client);
+        if (found) {
+            System.out.println("Client found: " + client);
+        } else
+            System.out.println("Error, client not found " + client);
+    }
+
     private static void listClients(IClientDAO clientDAO) {
+        System.out.println("---- list of clients ----");
         var clients = clientDAO.clientList();
         clients.forEach(System.out::println);
     }
